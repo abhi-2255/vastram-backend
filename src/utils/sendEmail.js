@@ -8,11 +8,15 @@ export const sendEmail = async (email,subject,message)=>{
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
             },
+            tls: {
+                rejectUnauthorized: false
+            },
         })
         await transporter.sendMail({
             from: `"Vastram" <${process.env.EMAIL_USER}>`,
             to: email, subject,
             text: message,
+            html: `<p>${message}</p>`
         })
         console.log("Email sent successfully");
     } catch (error) {
