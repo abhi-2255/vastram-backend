@@ -14,7 +14,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use("/auth",userRoute)
-app.use('/auth',otpRoute)
+app.use("/auth",otpRoute)
 
 
 const PORT = process.env.PORT || 5000
