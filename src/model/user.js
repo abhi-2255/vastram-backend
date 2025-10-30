@@ -12,7 +12,8 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        require: true
+        require: true,
+        unique: true
     },
     mobile: {
         type: String,
@@ -22,13 +23,18 @@ const userSchema = new Schema({
         type: String,
         require: true
     },
-    confirmPassword:{
+    confirmPassword: {
         type: String,
         require: true
-    }
-},{
-    timestamps: true
-})
+    },
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user"
+    },
+},
+    { timestamps: true }
+)
 
-const User = mongoose.model("User",userSchema)
+const User = mongoose.model("User", userSchema)
 export default User;

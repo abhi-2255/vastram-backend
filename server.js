@@ -4,6 +4,7 @@ import express from "express"
 import cors from "cors"
 import userRoute from "./src/routes/userRoute.js"
 import otpRoute from "./src/routes/otpRoute.js"
+import adminRoute from "./src/routes/adminRoute.js"
 
 dotenv.config()
 connectDB()
@@ -15,6 +16,7 @@ app.use(express.json())
 
 app.use("/auth",userRoute)
 app.use("/auth",otpRoute)
+app.use("/auth",adminRoute)
 
 
 const PORT = process.env.PORT || 5000

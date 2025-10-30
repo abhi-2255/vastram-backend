@@ -6,7 +6,7 @@ export const createUser = async (req,res) =>{
     const {firstName,lastName,mobile,email,password} = req.body
     try {
         const userExists = await User.findOne({email})
-        if(userExists) return res.status(400).json({message:"User already exists"})
+        if(userExists) return res.status(400).json({message:"User already exists, Please Login"})
 
             const salt = await bcrypt.genSalt(10)
             const hashedPassword = await bcrypt.hash(password,salt);
@@ -40,7 +40,7 @@ export const loginUser = async (req,res)=>{
         const user = await User.findOne({email})
         if(!user) return res.status(404).json({message:"User doesn't exist"})
 
-            const isMatch = await bcrypt.compare(password, user.password)
+            const isMatch = bcrypt.compare(password, user.password)
             if(!isMatch) return res.status(404).json({message: "Invalid email or password"})
 
                 res.status(200).json({
@@ -54,4 +54,3 @@ export const loginUser = async (req,res)=>{
         res.status(500).json({message: "Internal Server Error"})
     }
 }
-
