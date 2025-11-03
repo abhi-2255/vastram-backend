@@ -5,9 +5,11 @@ import cors from "cors"
 import userRoute from "./src/routes/userRoute.js"
 import otpRoute from "./src/routes/otpRoute.js"
 import adminRoute from "./src/routes/adminRoute.js"
+import seedAdmin from "./src/config/seedAdmin.js"
+
+
 
 dotenv.config()
-connectDB()
 
 const app = express()
 
@@ -16,9 +18,14 @@ app.use(express.json())
 
 app.use("/auth",userRoute)
 app.use("/auth",otpRoute)
-app.use("/auth",adminRoute)
+app.use("/admin",adminRoute)
 
 
 const PORT = process.env.PORT || 5000
-app.listen(PORT,()=>console.log(`Server running on ${PORT}`)
-)
+
+connectDB().then(()=>{
+    seedAdmin()
+    app.listen(PORT,()=>console.log(`Server running on ${PORT}`))
+}).catch(err =>{
+    console.error("DB Connection Failed", err);
+})

@@ -1,9 +1,9 @@
 import multer from 'multer';
+import sharp from 'sharp';
+import path from 'path';
+import fs from "fs"
+import {v4 as uuidv4} from "uuid"
 
-const sharp = require('sharp');
-const path = require('path');
-const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || 'uploads';
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
@@ -13,11 +13,11 @@ const storage = multer.memoryStorage();
 const upload = multer({
     storage,
     limits: { fileSize: 5 * 1024 * 1024 }, // 5MB per file
-    fileFilter: (req, file, cb) => {
+    fileFilter: (_req, file, cb) => {
         if (!file.mimetype.startsWith('image/')) {
             cb(new Error('Only images are allowed'));
         } else cb(null, true);
-    }
+    },
 });
 
 // process array of images -> ensure minCount, save resized images and thumbs
@@ -74,7 +74,3 @@ async function processAndSaveImages(files = [], baseUrl) {
     return saved;
 }
 
-module.exports = {
-    upload, // multer instance
-    processAndSaveImages
-};

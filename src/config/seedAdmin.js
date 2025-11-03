@@ -1,15 +1,15 @@
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import User from "../model/user.js";
 
 const seedAdmin = async () => {
     try {
         const existingAdmin = await User.findOne({ role: "admin" });
         if (existingAdmin) {
-            console.log("✅ Admin user already exists");
+            console.log("✅ Admin already exists");
             return;
         }
 
-        const hashedPassword = await bcrypt.hash("admin123", 10);
+        const hashedPassword = await bcrypt.hash("Admin@123", 10);
         const admin = new User({
             name: "Admin",
             email: "admin@example.com",
