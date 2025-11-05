@@ -5,7 +5,7 @@ import isAdmin from "../middlewares/isAdmin.js";
 
 const router = express.Router()
 
-router.post('//login', adminLogin)
+router.post('/login', adminLogin)
 router.get("/dashboard", authMiddlware, isAdmin, )
 
 
