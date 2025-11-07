@@ -23,14 +23,14 @@ const userSchema = new Schema({
         type: String,
         require: true
     },
-    confirmPassword: {
-        type: String,
-        require: true
-    },
     role: {
         type: String,
         enum: ["user", "admin"],
         default: "user"
+    },
+    isBlocked: {
+        type: Boolean,
+        default: false
     },
 },
     { timestamps: true }
